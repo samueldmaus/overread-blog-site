@@ -14,22 +14,24 @@ import com.overread.services.UserService;
 @Controller
 public class MainController
 {
-	@GetMapping("/")
+	@GetMapping("/login")
 	public String getHomeLogin()
 	{
 		return "login";
 	}
 	
+	/*
 	@PostMapping("/login")
-	public String processLogin(@RequestParam("email") String email, @RequestParam("password") String password)
+	public String processLogin(@RequestParam("username") String username, @RequestParam("password") String password)
 	{
-		boolean status = userService.findUser(email, password);
-		if(status)
+		User user = userService.findUser(username);
+		if(user != null)
 		{
 			return "redirect:/home";
 		}
 		return "login";
 	}
+	*/
 	
 	@GetMapping("/register")
 	public String getRegister(Model model)
@@ -45,7 +47,7 @@ public class MainController
 		return "redirect:/home";
 	}
 	
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String getHome()
 	{
 		return "home";

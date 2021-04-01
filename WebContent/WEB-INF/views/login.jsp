@@ -10,8 +10,8 @@
 	<h1>Login</h1>
 	<form action="./login" method="post">
 		<div>
-			<label>Email: </label>
-			<input type="text" name="email" />
+			<label>Username: </label>
+			<input type="text" name="username" />
 		</div>
 		<div>
 			<label>Password: </label>

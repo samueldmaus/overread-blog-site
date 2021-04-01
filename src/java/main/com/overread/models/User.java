@@ -9,7 +9,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users")
 public class User
-{
+{	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	private String username;
+
+	private String email;
+	
+	private String password;
+	
 	public User() {};
 	
 	public User(String u, String e, String p)
@@ -33,7 +43,7 @@ public class User
 	{
 		this.username = username;
 	}
-
+	
 	public String getEmail()
 	{
 		return email;
@@ -54,10 +64,4 @@ public class User
 		this.password = password;
 	}
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	private String username;
-	private String email;
-	private String password;
 }
