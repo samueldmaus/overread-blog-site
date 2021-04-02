@@ -9,7 +9,6 @@
 </head>
 <body>
 	<h1>Home page</h1>
-	<h1>Hello ${user.username }</h1>
 	<sec:authorize access="isAuthenticated()">
     	Welcome Back, <sec:authentication property="name"/>
 	</sec:authorize>
