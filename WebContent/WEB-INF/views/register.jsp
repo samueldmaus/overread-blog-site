@@ -22,7 +22,7 @@
 		</div>
 		<div>
 			<label>Password: </label>
-			<form:input path="password"/>
+			<form:input type="password" path="password"/>
 			<form:errors path="password" />
 		</div>
 		<div>

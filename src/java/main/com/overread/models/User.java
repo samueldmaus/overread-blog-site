@@ -30,7 +30,7 @@ public class User
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
 	
-	public User() { this.enabled = true; };
+	public User(){ this.enabled = true; };
 	
 	public User(String u, String e, String p)
 	{

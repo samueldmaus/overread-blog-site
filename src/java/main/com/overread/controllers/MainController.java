@@ -1,6 +1,8 @@
 package com.overread.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,12 @@ public class MainController
 	@GetMapping("/login")
 	public String getHomeLogin()
 	{
+		/*
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Object obj = auth.getPrincipal();
+		User currentUser = (User)obj;
+		System.out.println(currentUser.getUsername());
+		*/
 		return "login";
 	}
 	
@@ -44,6 +52,11 @@ public class MainController
 	{
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.addUser(user);
-		return "redirect:/index";
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logoutSuccess")
+	public String logoutSuccess() {
+		return "login";
 	}
 }
