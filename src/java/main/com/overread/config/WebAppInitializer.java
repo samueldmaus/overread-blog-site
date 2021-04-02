@@ -2,6 +2,8 @@ package com.overread.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import com.overread.security.WebSecurityConfig;
+
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer
 {
 

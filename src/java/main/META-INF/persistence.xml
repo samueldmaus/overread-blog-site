@@ -3,6 +3,7 @@
 	<persistence-unit name="overread_blog_site">
 		<class>com.overread.models.User</class>
 		<class>com.overread.models.Blog</class>
+		<class>com.overread.models.Authorities</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver"

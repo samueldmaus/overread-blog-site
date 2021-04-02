@@ -17,18 +17,24 @@ public class UserDetailsServiceI implements UserDetailsService
 	@Autowired
 	private UserService userService;
 	
-	@Override
-	@Transactional(readOnly=true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-	{
-		User user = userService.findUser(username);
-		UserBuilder builder = null;
-		if(user != null)
-		{
-			builder = org.springframework.security.core.userdetails.User.withUsername(username);
-			builder.password(user.getPassword());
-			
+	 @Transactional(readOnly = true)
+	 @Override
+	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+	 {
+		    User user = userService.findUserByUsername(username);
+		    UserBuilder builder = null;
+		    if (user != null) {
+		      
+		      builder = org.springframework.security.core.userdetails.User.withUsername(username);
+		      builder.disabled(!user.isEnabled());
+		      builder.password(user.getPassword());
+		      String[] authorities = user.getAuthorities()
+		          .stream().map(a -> a.getAuthority()).toArray(String[]::new);
+
+		      builder.authorities(authorities);
+		    } else {
+		      throw new UsernameNotFoundException("User not found.");
+		    }
+		    return builder.build();
 		}
-		return builder.build();
-	}
 }

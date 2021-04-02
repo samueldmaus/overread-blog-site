@@ -23,13 +23,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	private UserDetailsService userDetailsService;
 	
 	@Bean
-	public BCryptPasswordEncoder encoder() {
+	public BCryptPasswordEncoder passwordEncoder()
+	{
 		return new BCryptPasswordEncoder();
+	}
+	
+    @Override
+	public void configure(WebSecurity web)
+    {
+		web
+		.ignoring()
+		.antMatchers("/js/**", "/images/**", "/css/**", "/resources/**", "/scripts/**");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception
 	{
+		// CSRF is disabled for simplification and demonstration.
+		// Do not use this configuration for production.
 		http.csrf().disable()
 		.authorizeRequests().antMatchers("/login", "/register").permitAll()
 		.and().formLogin().loginPage("/login").permitAll()
@@ -37,27 +48,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		.and()
 		.logout().invalidateHttpSession(true).clearAuthentication(true)
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/logout").permitAll();	
-	}
-	
-    @Bean
-    public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(encoder());
-        return authProvider;
-    }
-    
-    @Override
-	public void configure(WebSecurity web){
-		web
-		.ignoring()
-		.antMatchers("/js/**", "/images/**", "/css/**", "/resources/**", "/scripts/**");
+		.logoutSuccessUrl("/logoutSuccess").permitAll();		
 	}
     
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception
-    {
-    	auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
-    }
+	@Override
+	protected void configure (AuthenticationManagerBuilder auth) throws Exception
+	{
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
 }
