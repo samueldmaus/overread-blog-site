@@ -22,7 +22,7 @@
 				<div class="col-md-10 col-lg-8">
 					<div class="post-preview">
 						<h2><a href="#">${blog.getTitle()}</a></h2>
-						<p>${blog.getBlogContents() }</p>
+						<p>${blog.getContents() }</p>
 					</div>
 				</div>
 			</div>

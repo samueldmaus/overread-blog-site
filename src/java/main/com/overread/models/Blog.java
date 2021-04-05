@@ -1,5 +1,7 @@
 package com.overread.models;
 
+import java.io.InputStream;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +20,7 @@ public class Blog
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name="CONTENTS", nullable=false)
+	@Column(name="BLOGCONTENTS", nullable=false)
 	@Lob
 	private byte[] blogContents;
 	
@@ -30,6 +32,9 @@ public class Blog
 	
 	@Column(name="DATECREATED", nullable=false)
 	private Date date;
+	
+	@Column(name="CONTENTS")
+	private String contents;
 	
 	public Blog(byte[] blog, String title)
 	{
@@ -90,6 +95,16 @@ public class Blog
 	public void setDate(Date date)
 	{
 		this.date = date;
+	}
+	
+	public String getContents()
+	{
+		return contents;
+	}
+	
+	public void setContents()
+	{
+		contents = new String(blogContents);
 	}
 	
 	

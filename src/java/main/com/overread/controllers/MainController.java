@@ -40,8 +40,7 @@ public class MainController
 		Iterable<Blog> blogs = blogService.get5MostRecent();
 		for(Blog b : blogs)
 		{
-			System.out.println(b.getAuthor());
-			System.out.println(b.getDate());
+			b.setContents();
 		}
 		model.addAttribute("blogs", blogs);
 		return "index";
