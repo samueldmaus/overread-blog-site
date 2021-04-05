@@ -1,5 +1,7 @@
 package com.overread.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.overread.models.Authorities;
+import com.overread.models.Blog;
 import com.overread.models.User;
+import com.overread.services.AuthoritiesService;
+import com.overread.services.BlogService;
 import com.overread.services.UserService;
 
 @Controller
@@ -20,11 +26,24 @@ public class MainController
 	private UserService userService;
 	
 	@Autowired
+	private AuthoritiesService authService;
+	
+	@Autowired
+	private BlogService blogService;
+	
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("/")
-	public String getIndex()
+	public String getIndex(Model model)
 	{
+		Iterable<Blog> blogs = blogService.get5MostRecent();
+		for(Blog b : blogs)
+		{
+			System.out.println(b.getAuthor());
+			System.out.println(b.getDate());
+		}
+		model.addAttribute("blogs", blogs);
 		return "index";
 	}
 	
@@ -52,6 +71,7 @@ public class MainController
 	{
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.addUser(user);
+		authService.addUserAuth(new Authorities(user, "USER"));
 		return "redirect:/";
 	}
 	

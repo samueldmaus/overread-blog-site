@@ -21,7 +21,6 @@ body
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	color: #f5f5dc;
 	box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
 }
 
@@ -48,14 +47,14 @@ body
 	color: inherit;
 }
 
-.login_form form .new_account
+.login_main form .new_account
 {
 	display: block;
 	text-align: center;
 	font-size: 12px;
 	color: #6f7a85;
 	opacity: 0.9;
-	margin-top: 10px;
+	text-decoration: none;
 }
 
 .login_main form .btn-primary

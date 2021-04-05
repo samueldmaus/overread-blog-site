@@ -18,7 +18,15 @@ public class Authorities
 	@ManyToOne
 	@JoinColumn(name="USERNAME")
 	private User user;
+	
+	public Authorities(User user, String auth)
+	{
+		this.user = user;
+		this.authority = auth;
+	}
 
+	public Authorities() {}
+	
 	public String getAuthority()
 	{
 		return authority;

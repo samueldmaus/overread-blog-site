@@ -38,8 +38,7 @@
 				<div>
 					<button class="btn btn-primary btn-block" type="submit">Sign Up</button>
 				</div>
-				<p class="already_login">Already have an account?</p>
-				<p class="already_login">Click <a href="login">here</a> to login</p>
+				<p class="already_login">Already have an account? Click <a href="login">here</a> to login</p>
 			</form:form>
 		</div>
 	</section>
