@@ -23,7 +23,8 @@ public class UserDetailsServiceI implements UserDetailsService
 	 {
 		    User user = userService.findUserByUsername(username);
 		    UserBuilder builder = null;
-		    if (user != null) {
+		    if (user != null)
+		    {
 		      
 		      builder = org.springframework.security.core.userdetails.User.withUsername(username);
 		      builder.disabled(!user.isEnabled());
@@ -32,7 +33,8 @@ public class UserDetailsServiceI implements UserDetailsService
 		          .stream().map(a -> a.getAuthority()).toArray(String[]::new);
 
 		      builder.authorities(authorities);
-		    } else {
+		    } else
+		    {
 		      throw new UsernameNotFoundException("User not found.");
 		    }
 		    return builder.build();

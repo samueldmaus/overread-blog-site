@@ -74,7 +74,9 @@ public class MainController
 	}
 	
 	@GetMapping("/logoutSuccess")
-	public String logoutSuccess() {
+	public String logoutSuccess()
+	{
+
 		return "login";
 	}
 	
@@ -85,6 +87,12 @@ public class MainController
 		Blog blog = selectedBlog.get();
 		model.addAttribute("blog", blog);
 		return "blog";
+	}
+	
+	@GetMapping("/account")
+	public String getUserAccount()
+	{
+		return "account";
 	}
 	
 }

@@ -14,7 +14,7 @@
 </head>
 <body>
 	<%@ include file="navbar.jsp" %>
-	<div class="jumbotron jumbotron-fluid" style="background-image:url(${homePhoto })" >
+	<div class="jumbotron jumbotron-fluid" style="background-image:url(${homePhoto }); background-size: cover" >
 		<div class="overlay">
 		</div>
 		<div class="row">

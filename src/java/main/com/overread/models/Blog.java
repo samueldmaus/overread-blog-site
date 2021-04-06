@@ -1,8 +1,7 @@
 package com.overread.models;
 
-import java.io.InputStream;
-import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,11 +36,14 @@ public class Blog
 	@Column(name="CONTENTS")
 	private String contents;
 	
-	public Blog(byte[] blog, String title)
+	@OneToMany
+	private List<Comment> comments;
+	
+	public Blog(byte[] blog, String title, String author)
 	{
 		this.blogContents = blog;
 		this.title = title;
-		// this.author
+		this.author = author;
 		// this.date
 		
 	}
