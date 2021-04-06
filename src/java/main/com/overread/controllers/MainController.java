@@ -109,6 +109,7 @@ public class MainController
 		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Comment new_comment = new Comment(user.getUsername(), comment.getCommentContents());
 		commentService.addComment(new_comment);
+		commentService.addBlogIdAndCommentId(blogId, new_comment.getId());
 		return "redirect:/blog/{id}";
 	}
 }

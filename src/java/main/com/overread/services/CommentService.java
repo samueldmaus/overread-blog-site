@@ -18,4 +18,9 @@ public class CommentService
 	{
 		commentRepo.save(comment);
 	}
+	
+	public void addBlogIdAndCommentId(Long blog_id, Long comment_id)
+	{
+		commentRepo.insertBlogIdCommentId(blog_id, comment_id);
+	}
 }
