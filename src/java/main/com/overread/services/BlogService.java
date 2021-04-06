@@ -1,6 +1,7 @@
 package com.overread.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,12 @@ public class BlogService
 	@Autowired
 	private BlogRepository blogRepo;
 	
-	public Iterable<Blog> get5MostRecent()
+	public Optional<Blog> getBlog(long id)
+	{
+		return blogRepo.findById(id);
+	}
+	
+	public Iterable<Blog> getAll()
 	{
 		return blogRepo.findAll();
 	}

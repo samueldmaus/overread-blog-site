@@ -1,15 +1,14 @@
 package com.overread.controllers;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.overread.models.Authorities;
@@ -37,7 +36,7 @@ public class MainController
 	@GetMapping("/")
 	public String getIndex(Model model)
 	{
-		Iterable<Blog> blogs = blogService.get5MostRecent();
+		Iterable<Blog> blogs = blogService.getAll();
 		for(Blog b : blogs)
 		{
 			b.setContents();
@@ -78,4 +77,13 @@ public class MainController
 	public String logoutSuccess() {
 		return "login";
 	}
+	
+	@GetMapping("/blog/{id}")
+	public String getBlog(@PathVariable("id") long blogId, Model model)
+	{
+		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+		model.addAttribute("blog", selectedBlog);
+		return "blog";
+	}
+	
 }

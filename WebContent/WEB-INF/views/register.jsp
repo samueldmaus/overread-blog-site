@@ -9,7 +9,7 @@
 <title>Registration</title>
 	<spring:url value="/resources/bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
 	<spring:url value="/resources/css/register.css" var="registerCss" />
-	<spring:url value="/resources/images/photo.png" var="seoulPic" />
+	<spring:url value="/resources/images/umbrella.jpg" var="umbrellaPic" />
 	<link href="${bootstrapCss}" rel="stylesheet" />
 	<link href="${registerCss}" rel="stylesheet" />
 </head>
@@ -17,7 +17,7 @@
 	<section class="register_main">
 		<div class="form_container">
 			<div class="image_holder">
-				<img src="${seoulPic}" alt="Seoul" />
+				<img style="width:100%" src="${umbrellaPic}" alt="Seoul" />
 			</div>
 			<form:form action="./register" method="post" modelAttribute="user">
 				<h2 class="account_text">Create an account:</h2>
