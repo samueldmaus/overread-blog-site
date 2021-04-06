@@ -9,7 +9,7 @@
 <meta charset="ISO-8859-1">
 	<title>Homepage</title>
 	<spring:url value="/resources/bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
-	<spring:url value="/resources/images/car.jpg" var="homePhoto" />
+	<spring:url value="/resources/images/restaurant.jpg" var="homePhoto" />
 	<link href="${bootstrapCss}" rel="stylesheet" />
 </head>
 <body>

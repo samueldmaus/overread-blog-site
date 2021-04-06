@@ -82,7 +82,8 @@ public class MainController
 	public String getBlog(@PathVariable("id") long blogId, Model model)
 	{
 		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
-		model.addAttribute("blog", selectedBlog);
+		Blog blog = selectedBlog.get();
+		model.addAttribute("blog", blog);
 		return "blog";
 	}
 	
