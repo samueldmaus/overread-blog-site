@@ -1,5 +1,7 @@
 package com.overread.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +24,10 @@ public class CommentService
 	public void addBlogIdAndCommentId(Long blog_id, Long comment_id)
 	{
 		commentRepo.insertBlogIdCommentId(blog_id, comment_id);
+	}
+	
+	public List<Comment> getCommentsForBlog(Long blog_id)
+	{
+		return commentRepo.fetchCommentsForBlog(blog_id);
 	}
 }

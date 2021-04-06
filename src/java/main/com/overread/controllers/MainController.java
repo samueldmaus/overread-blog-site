@@ -1,5 +1,6 @@
 package com.overread.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,12 +89,18 @@ public class MainController
 	}
 	
 	@GetMapping("/blog/{id}")
-	public String getBlog(@PathVariable("id") long blogId, Model model, Model commentModel)
+	public String getBlog(@PathVariable("id") long blogId, Model model, Model commentModel, Model blogComments)
 	{
 		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
 		Blog blog = selectedBlog.get();
 		model.addAttribute("blog", blog);
 		commentModel.addAttribute("comment", new Comment());
+		List<Comment> postedComments = commentService.getCommentsForBlog(blogId);
+		for(Comment c : postedComments)
+		{
+			c.setContents();
+		}
+		blogComments.addAttribute("blogComments", postedComments);
 		return "blog";
 	}
 	

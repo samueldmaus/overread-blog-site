@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +42,11 @@
 			</form:form>
 		</div>
 		<div class="container">
+			<c:forEach items="${blogComments}" var="comment">
+				<div class="row">
+					<p>${comment.getContents() }</p>
+				</div>
+			</c:forEach>
 		</div>
 </body>
 </html>
