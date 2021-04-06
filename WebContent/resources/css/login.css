@@ -5,7 +5,7 @@ body
 
 .login_main
 {
-	height: 2000px;
+	height: 1000px;
 	background: #787878;
 	position: relative;
 }
@@ -21,7 +21,7 @@ body
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	color: white;
+	color: f5f5dc;
 	box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
 }
 

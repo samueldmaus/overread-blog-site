@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +12,11 @@
 	<link href="${bootstrapCss}" rel="stylesheet" />
 </head>
 <body>
+	<%@ include file="navbar.jsp" %>
 	<h1>Home page</h1>
 	<sec:authorize access="isAuthenticated()">
-    	Welcome Back, <sec:authentication property="name"/>
+    	Welcome to Overread, <sec:authentication property="name"/>
 	</sec:authorize>
-	<a href="./logout"><Button>Logout</Button></a>
 	<div class="container">
 		<c:forEach items="${blogs}" var="blog">
 			<div class="row">
@@ -23,6 +24,7 @@
 					<div class="post-preview">
 						<h2><a href="#">${blog.getTitle()}</a></h2>
 						<p>${blog.getContents() }</p>
+						<p class="post-meta">Posted by ${blog.getAuthor()} on ${blog.getDate().getMonth()+1}/${blog.getDate().getDay()}/${blog.getDate().getYear()+1900}</p>
 					</div>
 				</div>
 			</div>
