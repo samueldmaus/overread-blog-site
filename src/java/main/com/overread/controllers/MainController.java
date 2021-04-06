@@ -3,6 +3,8 @@ package com.overread.controllers;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.overread.models.Authorities;
 import com.overread.models.Blog;
+import com.overread.models.Comment;
 import com.overread.models.User;
 import com.overread.services.AuthoritiesService;
 import com.overread.services.BlogService;
+import com.overread.services.CommentService;
 import com.overread.services.UserService;
 
 @Controller
@@ -29,6 +33,9 @@ public class MainController
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -69,7 +76,7 @@ public class MainController
 	{
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userService.addUser(user);
-		authService.addUserAuth(new Authorities(user, "USER"));
+		// authService.addUserAuth(new Authorities(user, "USER"));
 		return "redirect:/";
 	}
 	
@@ -81,11 +88,12 @@ public class MainController
 	}
 	
 	@GetMapping("/blog/{id}")
-	public String getBlog(@PathVariable("id") long blogId, Model model)
+	public String getBlog(@PathVariable("id") long blogId, Model model, Model commentModel)
 	{
 		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
 		Blog blog = selectedBlog.get();
 		model.addAttribute("blog", blog);
+		commentModel.addAttribute("comment", new Comment());
 		return "blog";
 	}
 	
@@ -95,4 +103,12 @@ public class MainController
 		return "account";
 	}
 	
+	@PostMapping("/blog/{id}/postComment")
+	public String postComment(@PathVariable("id") long blogId, @ModelAttribute("comment") Comment comment)
+	{
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Comment new_comment = new Comment(user.getUsername(), comment.getCommentContents());
+		commentService.addComment(new_comment);
+		return "redirect:/blog/{id}";
+	}
 }

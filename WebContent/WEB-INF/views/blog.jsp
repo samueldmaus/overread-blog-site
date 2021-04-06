@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
@@ -7,11 +8,12 @@
 <meta charset="ISO-8859-1">
 <title>Blog</title>
 	<spring:url value="/resources/bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
+	<spring:url value="/resources/images/restaurant.jpg" var="homePhoto" />
 	<link href="${bootstrapCss}" rel="stylesheet" />
 </head>
 <body>
 	<%@ include file="navbar.jsp" %>
-		<div class="jumbotron">
+		<div class="jumbotron jumbotron-fluid" style="background-image:url(${homePhoto }); background-size: cover" >
 			<div class="row">
 				<div class="col-md-10 col-lg-8 mx-auto" style="color:#f5f5dc">
 	    			<div class="site-heading">
@@ -27,6 +29,18 @@
 					<p>${blog.setContents(); blog.getContents() }</p>
 				</div>
 			</div>
+		</div>
+		<div class="container">
+			<form:form action="./${blog.getId() }/postComment" method="post" modelAttribute="comment">
+				<div class="input-group">
+					<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
+				</div>
+				<div class="input-group-prepend">
+					<button class="btn btn-primary btn-block" type="submit">Submit</button>
+				</div>
+			</form:form>
+		</div>
+		<div class="container">
 		</div>
 </body>
 </html>
