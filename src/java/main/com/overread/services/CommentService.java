@@ -26,10 +26,9 @@ public class CommentService
 		return commentRepo.getCommentsByBlogId(blog_id);
 	}
 	
-	public void deleteComment(Long blogId, Long commentId)
+	public void deleteComment(Long commentId)
 	{
-		//commentRepo.deleteById(commentId);
-		commentRepo.deleteBlogComment(blogId, commentId);
+		commentRepo.deleteById(commentId);
 	}
 
 }

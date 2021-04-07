@@ -122,8 +122,7 @@ public class MainController
 	public String deleteComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId)
 	{
 		System.out.println("DELETING");
-		commentService.deleteComment(blogId, commentId);
-		//commentService.deleteBlogComment(blogId, commentId);
+		commentService.deleteComment(commentId);
 		return "redirect:/blog/{blogId}";
 	}
 	
