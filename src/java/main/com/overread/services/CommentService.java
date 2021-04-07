@@ -21,13 +21,15 @@ public class CommentService
 		commentRepo.save(comment);
 	}
 	
-	public void addBlogIdAndCommentId(Long blog_id, Long comment_id)
-	{
-		commentRepo.insertBlogIdCommentId(blog_id, comment_id);
-	}
-	
 	public List<Comment> getCommentsForBlog(Long blog_id)
 	{
-		return commentRepo.fetchCommentsForBlog(blog_id);
+		return commentRepo.getCommentsByBlogId(blog_id);
 	}
+	
+	public void deleteComment(Long blogId, Long commentId)
+	{
+		//commentRepo.deleteById(commentId);
+		commentRepo.deleteBlogComment(blogId, commentId);
+	}
+
 }

@@ -43,9 +43,26 @@
 		</div>
 		<div class="container">
 			<c:forEach items="${blogComments}" var="comment">
-				<div class="row">
-					<p>${comment.getContents() }</p>
-				</div>
+				<c:choose>
+					<c:when test="${comment.getAuthor() == username}">
+						<div class="row">
+							<p>${comment.getContents() }</p>
+						</div>
+						<div class="row">
+							
+							<a href="#">Edit</a>
+							<form:form method="post" action="./${blog.getId() }/${comment.getId()}/deleteComment">
+								<input type="submit" value="delete" />
+							</form:form>
+
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="row">
+							<p>${comment.getContents() }</p>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</div>
 </body>

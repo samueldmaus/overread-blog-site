@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,13 +89,15 @@ public class MainController
 		return "login";
 	}
 	
-	@GetMapping("/blog/{id}")
-	public String getBlog(@PathVariable("id") long blogId, Model model, Model commentModel, Model blogComments)
+	@GetMapping("/blog/{blogId}")
+	public String getBlog(@PathVariable("blogId") long blogId, Model model, Model commentModel, Model blogComments)
 	{
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
 		Blog blog = selectedBlog.get();
 		model.addAttribute("blog", blog);
 		commentModel.addAttribute("comment", new Comment());
+		commentModel.addAttribute("username", user.getUsername());
 		List<Comment> postedComments = commentService.getCommentsForBlog(blogId);
 		for(Comment c : postedComments)
 		{
@@ -104,19 +107,29 @@ public class MainController
 		return "blog";
 	}
 	
+	@PostMapping("/blog/{blogId}/postComment")
+	public String postComment(@PathVariable("blogId") long blogId, @ModelAttribute("comment") Comment comment)
+	{
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+		Blog blog = selectedBlog.get();
+		Comment new_comment = new Comment(user.getUsername(), comment.getCommentContents(), blog);
+		commentService.addComment(new_comment);
+		return "redirect:/blog/{blogId}";
+	}
+	
+	@PostMapping("/blog/{blogId}/{commentId}/deleteComment")
+	public String deleteComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId)
+	{
+		System.out.println("DELETING");
+		commentService.deleteComment(blogId, commentId);
+		//commentService.deleteBlogComment(blogId, commentId);
+		return "redirect:/blog/{blogId}";
+	}
+	
 	@GetMapping("/account")
 	public String getUserAccount()
 	{
 		return "account";
-	}
-	
-	@PostMapping("/blog/{id}/postComment")
-	public String postComment(@PathVariable("id") long blogId, @ModelAttribute("comment") Comment comment)
-	{
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Comment new_comment = new Comment(user.getUsername(), comment.getCommentContents());
-		commentService.addComment(new_comment);
-		commentService.addBlogIdAndCommentId(blogId, new_comment.getId());
-		return "redirect:/blog/{id}";
 	}
 }

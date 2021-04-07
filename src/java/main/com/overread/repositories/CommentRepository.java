@@ -11,10 +11,10 @@ import com.overread.models.Comment;
 
 public interface CommentRepository extends CrudRepository<Comment, Long>
 {
-	@Modifying
-	@Query(value ="INSERT INTO blogs_comment VALUES(:bId, :cId)", nativeQuery = true)
-	public void insertBlogIdCommentId(@Param("bId")Long blog_id, @Param("cId")Long comment_id);
+
+	@Query(value="SELECT * FROM comment WHERE blog_id = :bId", nativeQuery=true)
+	public List<Comment> getCommentsByBlogId(@Param("bId")Long blog_id);
 	
-	@Query(value="select * from comment join blogs_comment bc on comment.id = bc.comments_id WHERE bc.Blog_id = :bId", nativeQuery=true)
-	List<Comment> fetchCommentsForBlog(@Param("bId")Long blog_id);
+	@Query(value="DELETE FROM blogs_comment WHERE Blog_id = :bId AND comments_id = :cId", nativeQuery=true)
+	public void deleteBlogComment(@Param("bId")Long blog_id, @Param("cId")Long comment_id);
 }

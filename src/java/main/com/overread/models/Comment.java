@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment
@@ -22,12 +23,16 @@ public class Comment
 	@Column(name="CONTENTS")
 	private String contents;
 	
+	@ManyToOne
+	private Blog blog;
+	
 	public Comment() {}
 	
-	public Comment(String author, byte[] contents)
+	public Comment(String author, byte[] contents, Blog blog)
 	{
 		this.author = author;
 		this.commentContents = contents;
+		this.blog = blog;
 	}
 
 	public long getId()
