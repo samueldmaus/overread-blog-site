@@ -157,4 +157,10 @@ public class MainController
 	{
 		return "account";
 	}
+	
+	@GetMapping("/about")
+	public String getAboutMe()
+	{
+		return "about";
+	}
 }
