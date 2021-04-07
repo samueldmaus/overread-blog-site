@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +17,11 @@
     		<div class="collapse navbar-collapse" id="navbarResponsive">
     			<ul class="navbar-nav ml-auto">
         			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
-        			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/about">About Me</a></li>
-        			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/account">Your Account</a></li>
+        			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/about">About</a></li>
+        			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/account">Account</a></li>
+        			<sec:authorize access="hasRole('ADMIN')">
+    					<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/createBlog">Create Blog</a></li>
+					</sec:authorize>
         			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logoutSuccess">Logout</a></li>
     			</ul>
     			<form class="d-flex">

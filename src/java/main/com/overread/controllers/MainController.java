@@ -170,6 +170,18 @@ public class MainController
 		return "about";
 	}
 	
+	@GetMapping("/accessDenied")
+	public String getAccessDenied()
+	{
+		return "denied";
+	}
+	
+	@GetMapping("/createBlog")
+	public String getCreateBlog()
+	{
+		return "createblog";
+	}
+	
 	/* will create authority levels in db
 	@GetMapping("/createAuth")
 	public String createAuthorities() {
