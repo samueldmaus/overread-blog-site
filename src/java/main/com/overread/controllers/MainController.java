@@ -1,7 +1,10 @@
 package com.overread.controllers;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,9 +79,13 @@ public class MainController
 	@PostMapping("/register")
 	public String processRegister(@ModelAttribute("user") User user)
 	{
+		Set<Authorities> userAuth = new HashSet();
+		List<Authorities> authIt = (List<Authorities>) authService.getAllAuths();
+		userAuth.add(authIt.get(0));
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setAuthorities(userAuth);
 		userService.addUser(user);
-		// authService.addUserAuth(new Authorities(user, "USER"));
+		//authService.addAuthorityToUser(user);
 		return "redirect:/";
 	}
 	
@@ -163,4 +169,26 @@ public class MainController
 	{
 		return "about";
 	}
+	
+	/* will create authority levels in db
+	@GetMapping("/createAuth")
+	public String createAuthorities() {
+		Authorities auth = new Authorities();
+		auth.setAuthority("ROLE_USER");
+		Authorities auth2 = new Authorities();
+		auth2.setAuthority("ROLE_ADMIN");
+		Authorities auth3 = new Authorities();
+		auth3.setAuthority("ROLE_MOD");
+		try
+		{
+			authService.addUserAuth(auth);
+			authService.addUserAuth(auth2);
+		}
+		catch (Exception e)
+		{
+		
+		}
+		return "index";
+	}
+	*/
 }

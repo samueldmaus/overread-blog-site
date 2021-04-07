@@ -3,11 +3,13 @@ package com.overread.models;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,10 +29,17 @@ public class User
 	@Column(name="ENABLED")
 	private boolean enabled;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Set<Authorities> authorities = new HashSet<>();
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_roles",
+			joinColumns = @JoinColumn(name = "username"),
+			inverseJoinColumns = @JoinColumn(name = "authorityId"))
+	private Set<Authorities> authorities;
 	
-	public User(){ this.enabled = true; };
+	public User()
+	{
+		this.enabled = true;
+		this.authorities = new HashSet();
+	}
 	
 	public User(String u, String e, String p)
 	{
