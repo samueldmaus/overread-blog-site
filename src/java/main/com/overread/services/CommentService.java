@@ -30,5 +30,10 @@ public class CommentService
 	{
 		commentRepo.deleteById(commentId);
 	}
+	
+	public void updateComment( byte[] updatedComment, Long commentId)
+	{
+		commentRepo.updateBlogComment(updatedComment, commentId);
+	}
 
 }

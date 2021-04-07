@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.overread.models.Authorities;
 import com.overread.models.Blog;
@@ -121,8 +122,33 @@ public class MainController
 	@PostMapping("/blog/{blogId}/{commentId}/deleteComment")
 	public String deleteComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId)
 	{
-		System.out.println("DELETING");
 		commentService.deleteComment(commentId);
+		return "redirect:/blog/{blogId}";
+	}
+	
+	@GetMapping("/blog/{blogId}/{commentId}/editComment")
+	public String getEditComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId,  Model model, Model commentModel, Model blogComments, Model newComment)
+	{
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+		Blog blog = selectedBlog.get();
+		model.addAttribute("blog", blog);
+		commentModel.addAttribute("comment", new Comment());
+		commentModel.addAttribute("username", user.getUsername());
+		commentModel.addAttribute("commentToEdit", commentId);
+		List<Comment> postedComments = commentService.getCommentsForBlog(blogId);
+		for(Comment c : postedComments)
+		{
+			c.setContents();
+		}
+		blogComments.addAttribute("blogComments", postedComments);
+		return "commentedit";
+	}
+	
+	@PostMapping("/blog/{blogId}/{commentId}/editComment")
+	public String postEditComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId, @RequestParam("updatedComment") byte[] updatedComment)
+	{
+		commentService.updateComment(updatedComment, commentId);
 		return "redirect:/blog/{blogId}";
 	}
 	

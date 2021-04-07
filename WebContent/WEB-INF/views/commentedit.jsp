@@ -45,18 +45,27 @@
 			<c:forEach items="${blogComments}" var="individualcomment">
 				<c:choose>
 					<c:when test="${individualcomment.getAuthor() == username}">
-						<div class="row">
-							<p>${individualcomment.getContents() }</p>
-						</div>
-						<div class="row">
-							<form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
-								<input type="submit" value="Edit"/>
-							</form:form>
-							<form:form method="post" action="./${blog.getId() }/${individualcomment.getId()}/deleteComment">
-								<input type="submit" value="Delete" />
-							</form:form>
-
-						</div>
+						<c:choose>
+							<c:when test="${individualcomment.getId() == commentToEdit }">
+								<form method="post" action="${pageContext.request.contextPath}/blog/${blog.getId()}/${individualcomment.getId()}/editComment">
+									<textarea name="updatedComment" autofocus >${individualcomment.getContents() }</textarea>
+									<button type="submit">Submit</button>
+								</form>
+							</c:when>
+							<c:otherwise>
+								<div class="row">
+									<p>${individualcomment.getContents() }</p>
+								</div>
+								<div class="row">
+									<form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
+										<input type="submit" value="Edit"/>
+									</form:form>
+									<form:form method="post" action="./${blog.getId() }/${individualcomment.getId()}/deleteComment">
+										<input type="submit" value="Delete" />
+									</form:form>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 						<div class="row">

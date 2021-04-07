@@ -17,4 +17,8 @@ public interface CommentRepository extends CrudRepository<Comment, Long>
 	
 	@Query(value="DELETE FROM blogs_comment WHERE Blog_id = :bId AND comments_id = :cId", nativeQuery=true)
 	public void deleteBlogComment(@Param("bId")Long blog_id, @Param("cId")Long comment_id);
+	
+	@Modifying
+	@Query(value="UPDATE comment SET commentcontents = :cC WHERE id = :cId", nativeQuery=true)
+	public void updateBlogComment(@Param("cC")byte[] updatedComment, @Param("cId")Long commentId);
 }
