@@ -32,14 +32,19 @@
 			</div>
 		</div>
 		<div class="container">
-			<form:form action="./${blog.getId() }/postComment" method="post" modelAttribute="comment">
-				<div class="input-group">
-					<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
+			<div class="row">
+				<div class="col">
+					<form:form action="./${blog.getId() }/postComment" method="post" modelAttribute="comment">
+						<div class="input-group">
+							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
+						</div>
+						<div class="input-group-prepend">
+							<button class="btn btn-primary btn-block" type="submit">Submit</button>
+						</div>
+					</form:form>
 				</div>
-				<div class="input-group-prepend">
-					<button class="btn btn-primary btn-block" type="submit">Submit</button>
-				</div>
-			</form:form>
+				<div class="col"></div>
+			</div>
 		</div>
 		<div class="container">
 			<c:forEach items="${blogComments}" var="individualcomment">
