@@ -27,7 +27,9 @@
 		</div>
 	</div>
 	<sec:authorize access="isAuthenticated()">
-    	Welcome to Overread, <sec:authentication property="name"/>
+		<blockquote class="blockquote" style="padding:15px">
+			Welcome to Overread, <sec:authentication property="name"/>
+		</blockquote>
 	</sec:authorize>
 	<div class="container">
 		<c:forEach items="${blogs}" var="blog">

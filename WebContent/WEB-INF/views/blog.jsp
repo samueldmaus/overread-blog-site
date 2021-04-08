@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -28,9 +29,18 @@
 			<div class="row">
 				<div class="col-md-10 col-lg-8">
 					<p>${blog.setContents(); blog.getContents() }</p>
+					<sec:authorize access="hasRole('ADMIN')">
+						<form action="./${blog.getId() }/editBlog" method="get">
+							<button type="submit" class="btn btn-secondary" style="margin:5px;">Edit Blog</button>
+						</form>
+						<form action="./${blog.getId() }/deleteBlog" method="post">
+							<button type="submit" class="btn btn-danger" style="margin:5px;">Delete Blog</button>
+						</form>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
+		<br/>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -47,14 +57,12 @@
 				<div class="col"></div>
 			</div>
 		</div>
-		<div class="container">
+		<div class="container" style="padding:15px;">
 			<c:forEach items="${blogComments}" var="individualcomment">
 				<c:choose>
 					<c:when test="${individualcomment.getAuthor() == username}">
-						<div class="row">
+						<div class="row" style="outline: 3px solid black">
 							<p>${individualcomment.getContents() }</p>
-						</div>
-						<div class="row">
 							<form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
 								<input type="submit" value="Edit"/>
 							</form:form>
@@ -65,7 +73,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="row">
+						<div class="row" style="outline:3px solid black"">
 							<p>${individualcomment.getContents() }</p>
 						</div>
 					</c:otherwise>

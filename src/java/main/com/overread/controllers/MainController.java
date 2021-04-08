@@ -197,6 +197,18 @@ public class MainController
 		return "redirect:/";
 	}
 	
+	@GetMapping("/blog/{blogId}/editBlog")
+	public String getEditBlog()
+	{
+		return "editblog";
+	}
+	
+	@PostMapping("/blog/{blogId}/deleteBlog")
+	public String deleteBlog()
+	{
+		return "redirect:/";
+	}
+	
 	/* will create authority levels in db
 	@GetMapping("/createAuth")
 	public String createAuthorities() {
