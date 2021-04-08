@@ -1,10 +1,8 @@
 package com.overread.controllers;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -51,11 +49,12 @@ public class MainController
 	@GetMapping("/")
 	public String getIndex(Model model)
 	{
-		Iterable<Blog> blogs = blogService.getAll();
+		List<Blog> blogs = (List<Blog>) blogService.getAll();
 		for(Blog b : blogs)
 		{
 			b.setContents();
 		}
+		Collections.reverse(blogs);
 		model.addAttribute("blogs", blogs);
 		return "index";
 	}

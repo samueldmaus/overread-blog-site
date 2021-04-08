@@ -49,8 +49,7 @@
 							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
 						</div>
 						<div class="input-group-prepend">
-							<br/>
-							<button class="btn btn-primary btn-block" type="submit">Submit</button>
+							<button class="btn btn-primary btn-block" type="submit" style="margin-top:5px">Submit</button>
 						</div>
 					</form:form>
 				</div>
@@ -61,20 +60,26 @@
 			<c:forEach items="${blogComments}" var="individualcomment">
 				<c:choose>
 					<c:when test="${individualcomment.getAuthor() == username}">
-						<div class="row" style="outline: 3px solid black">
-							<p>${individualcomment.getContents() }</p>
+						<div class="row" style="border-bottom: 3px solid black; margin:5px; padding:10px; display:block">
+							<p style="display:block">${individualcomment.getContents() }</p>
+							<p>-(You)</p>
 							<form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
-								<input type="submit" value="Edit"/>
+								<input class="btn btn-secondary" type="submit" value="Edit" style="margin: 5px"/>
 							</form:form>
 							<form:form method="post" action="./${blog.getId() }/${individualcomment.getId()}/deleteComment">
-								<input type="submit" value="Delete" />
+								<input class="btn btn-danger" type="submit" value="Delete" />
 							</form:form>
-
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="row" style="outline:3px solid black">
+						<div class="row" style="border-bottom:3px solid black; margin:5px; padding:10px; display:block">
 							<p>${individualcomment.getContents() }</p>
+							<p>-${individualcomment.getAuthor() }</p>
+							<sec:authorize access="hasRole('ADMIN')">
+								<form:form method="post" action="./${blog.getId() }/${individualcomment.getId()}/deleteComment">
+									<input class="btn btn-danger" type="submit" value="Delete" />
+								</form:form>
+							</sec:authorize>
 						</div>
 					</c:otherwise>
 				</c:choose>
