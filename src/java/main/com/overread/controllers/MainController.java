@@ -216,8 +216,9 @@ public class MainController
 	}
 	
 	@PostMapping("/blog/{blogId}/deleteBlog")
-	public String deleteBlog()
+	public String deleteBlog(@PathVariable("blogId")Long blogId)
 	{
+		blogService.deleteBlog(blogId);
 		return "redirect:/";
 	}
 	

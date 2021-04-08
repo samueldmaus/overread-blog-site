@@ -35,4 +35,9 @@ public class BlogService
 	{
 		blogRepo.updateBlog(title, newBlogContents, blogId);
 	}
+	
+	public void deleteBlog(Long blogId)
+	{
+		blogRepo.deleteById(blogId);
+	}
 }
