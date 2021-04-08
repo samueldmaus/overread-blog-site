@@ -1,10 +1,13 @@
 package com.overread.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,18 +15,14 @@ import javax.persistence.Table;
 public class Authorities
 {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer authorityId;
+	
 	@Column(name="AUTHORITY")
 	private String authority;
 	
-	@ManyToOne
-	@JoinColumn(name="USERNAME")
-	private User user;
-	
-	public Authorities(User user, String auth)
-	{
-		this.user = user;
-		this.authority = auth;
-	}
+	@ManyToMany(mappedBy = "authorities")
+	private Set<User> userList;
 
 	public Authorities() {}
 	
@@ -37,13 +36,24 @@ public class Authorities
 		this.authority = authority;
 	}
 
-	public User getUser()
+	public Integer getAuthorityId()
 	{
-		return user;
+		return authorityId;
 	}
 
-	public void setUser(User user)
+	public void setAuthorityId(Integer authorityId)
 	{
-		this.user = user;
+		this.authorityId = authorityId;
 	}
+
+	public Set<User> getUserList()
+	{
+		return userList;
+	}
+
+	public void setUserList(Set<User> userList)
+	{
+		this.userList = userList;
+	}
+
 }

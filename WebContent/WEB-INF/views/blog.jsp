@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +20,7 @@
 				<div class="col-md-10 col-lg-8 mx-auto" style="color:#f5f5dc">
 	    			<div class="site-heading">
 	        			<h1>${blog.getTitle()}</h1>
-	        			<span class="subheading">Posted by ${blog.getAuthor() } on ${blog.getDate().getMonth()+1}/${blog.getDate().getDay()}/${blog.getDate().getYear()+1900}</span>
+	        			<span class="subheading">Posted by ${blog.getAuthor() } on ${blog.getDate().getMonth()+1}/${blog.getDate().getDate()}/${blog.getDate().getYear()+1900}</span>
 	    			</div>
 				</div>
 			</div>
@@ -28,9 +29,18 @@
 			<div class="row">
 				<div class="col-md-10 col-lg-8">
 					<p>${blog.setContents(); blog.getContents() }</p>
+					<sec:authorize access="hasRole('ADMIN')">
+						<form action="./${blog.getId() }/editBlog" method="get">
+							<button type="submit" class="btn btn-secondary" style="margin:5px;">Edit Blog</button>
+						</form>
+						<form action="./${blog.getId() }/deleteBlog" method="post">
+							<button type="submit" class="btn btn-danger" style="margin:5px;">Delete Blog</button>
+						</form>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
+		<br/>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -39,6 +49,7 @@
 							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
 						</div>
 						<div class="input-group-prepend">
+							<br/>
 							<button class="btn btn-primary btn-block" type="submit">Submit</button>
 						</div>
 					</form:form>
@@ -46,14 +57,12 @@
 				<div class="col"></div>
 			</div>
 		</div>
-		<div class="container">
+		<div class="container" style="padding:15px;">
 			<c:forEach items="${blogComments}" var="individualcomment">
 				<c:choose>
 					<c:when test="${individualcomment.getAuthor() == username}">
-						<div class="row">
+						<div class="row" style="outline: 3px solid black">
 							<p>${individualcomment.getContents() }</p>
-						</div>
-						<div class="row">
 							<form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
 								<input type="submit" value="Edit"/>
 							</form:form>
@@ -64,7 +73,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="row">
+						<div class="row" style="outline:3px solid black">
 							<p>${individualcomment.getContents() }</p>
 						</div>
 					</c:otherwise>

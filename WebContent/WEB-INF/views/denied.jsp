@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-	<title>Homepage</title>
+	<title>Access Denied</title>
 	<spring:url value="/resources/bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
 	<spring:url value="/resources/images/restaurant.jpg" var="homePhoto" />
 	<link href="${bootstrapCss}" rel="stylesheet" />
@@ -26,24 +25,10 @@
 			</div>
 		</div>
 	</div>
-	<sec:authorize access="isAuthenticated()">
-		<blockquote class="blockquote" style="padding:15px">
-			Welcome to Overread, <sec:authentication property="name"/>
-		</blockquote>
-	</sec:authorize>
 	<div class="container">
-		<c:forEach items="${blogs}" var="blog">
-			<div class="row">
-				<div class="col-md-10 col-lg-8">
-					<div class="post-preview">
-						<h2><a href="./blog/${blog.getId() }">${blog.getTitle()}</a></h2>
-						<p>${blog.getContents() }</p>
-						<p class="post-meta">Posted by ${blog.getAuthor()} on ${blog.getDate().getMonth()+1}/${blog.getDate().getDate()}/${blog.getDate().getYear()+1900}</p>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
+		<div class="row">
+			<h1>Sorry, you do not have access to this page</h1>
+		</div>
 	</div>
-
 </body>
 </html>

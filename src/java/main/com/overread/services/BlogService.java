@@ -16,6 +16,11 @@ public class BlogService
 	@Autowired
 	private BlogRepository blogRepo;
 	
+	public void createBlog(Blog blog)
+	{
+		blogRepo.save(blog);
+	}
+	
 	public Optional<Blog> getBlog(long id)
 	{
 		return blogRepo.findById(id);
@@ -24,5 +29,15 @@ public class BlogService
 	public Iterable<Blog> getAll()
 	{
 		return blogRepo.findAll();
+	}
+	
+	public void updateBlog(String title, byte[] newBlogContents, long blogId)
+	{
+		blogRepo.updateBlog(title, newBlogContents, blogId);
+	}
+	
+	public void deleteBlog(Long blogId)
+	{
+		blogRepo.deleteById(blogId);
 	}
 }
