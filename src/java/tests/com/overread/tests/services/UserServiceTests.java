@@ -13,7 +13,7 @@ import com.overread.repositories.UserRepository;
 import com.overread.services.UserService;
 
 
-public class UserServiceTest
+public class UserServiceTests
 {
 	private static UserService userService;
 	
@@ -29,8 +29,7 @@ public class UserServiceTest
 	@Test
 	public void testFindByUsername()
 	{
-		Mockito.when(userRepo.findUserByUsername(anyString())).thenReturn(
-				new User("user1", "email1", "password1"));
+		Mockito.when(userRepo.findUserByUsername(anyString())).thenReturn(new User("user1", "email1", "password1"));
 		User actual = userService.findUserByUsername("user");
 		String expected = "email1";
 		assertEquals(expected, actual.getEmail());

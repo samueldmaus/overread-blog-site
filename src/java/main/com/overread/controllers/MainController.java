@@ -88,7 +88,7 @@ public class MainController
 		user.setAuthorities(userAuth);
 		userService.addUser(user);
 		//authService.addAuthorityToUser(user);
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/logoutSuccess")

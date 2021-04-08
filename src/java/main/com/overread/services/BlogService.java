@@ -16,6 +16,13 @@ public class BlogService
 	@Autowired
 	private BlogRepository blogRepo;
 	
+	public BlogService() {}
+	
+	public BlogService(BlogRepository blogRepo)
+	{
+		this.blogRepo = blogRepo;
+	}
+	
 	public void createBlog(Blog blog)
 	{
 		blogRepo.save(blog);
