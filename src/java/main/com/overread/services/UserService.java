@@ -14,6 +14,13 @@ public class UserService
 	@Autowired
 	private UserRepository userRepo;
 	
+	public UserService() {}
+	
+	public UserService(UserRepository userRepo)
+	{
+		this.userRepo = userRepo;
+	}
+	
 	public void addUser(User user)
 	{
 		userRepo.save(user);
