@@ -1,7 +1,13 @@
 package com.overread.controllers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,9 +82,13 @@ public class MainController
 	@PostMapping("/register")
 	public String processRegister(@ModelAttribute("user") User user)
 	{
+		Set<Authorities> userAuth = new HashSet();
+		List<Authorities> authIt = (List<Authorities>) authService.getAllAuths();
+		userAuth.add(authIt.get(0));
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setAuthorities(userAuth);
 		userService.addUser(user);
-		// authService.addUserAuth(new Authorities(user, "USER"));
+		//authService.addAuthorityToUser(user);
 		return "redirect:/";
 	}
 	
@@ -163,4 +172,75 @@ public class MainController
 	{
 		return "about";
 	}
+	
+	@GetMapping("/accessDenied")
+	public String getAccessDenied()
+	{
+		return "denied";
+	}
+	
+	@GetMapping("/createBlog")
+	public String getCreateBlog(Model model)
+	{
+		model.addAttribute("blog", new Blog());
+		return "createblog";
+	}
+	
+	@PostMapping("/createBlog")
+	public String createBlogPost(@ModelAttribute("blog")Blog blog)
+	{
+		Date now = new Date();
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		blog.setAuthor(user.getUsername());
+		blog.setDate(now);
+		blogService.createBlog(blog);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/blog/{blogId}/editBlog")
+	public String getEditBlog(@PathVariable("blogId") long blogId, Model model)
+	{
+		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+		Blog blog = selectedBlog.get();
+		blog.setContents();
+		model.addAttribute("blog", blog);
+		return "editblog";
+	}
+	
+	@PostMapping("/blog/{blogId}/editBlog")
+	public String updateBlog(@PathVariable("blogId")long blogId, @RequestParam("newTitle") String newTitle, @RequestParam("newContents")String newContents)
+	{
+		byte[] newContentsByte = newContents.getBytes();
+		blogService.updateBlog(newTitle, newContentsByte, blogId);
+		return "redirect:/blog/{blogId}";
+	}
+	
+	@PostMapping("/blog/{blogId}/deleteBlog")
+	public String deleteBlog(@PathVariable("blogId")Long blogId)
+	{
+		blogService.deleteBlog(blogId);
+		return "redirect:/";
+	}
+	
+	/* will create authority levels in db
+	@GetMapping("/createAuth")
+	public String createAuthorities() {
+		Authorities auth = new Authorities();
+		auth.setAuthority("ROLE_USER");
+		Authorities auth2 = new Authorities();
+		auth2.setAuthority("ROLE_ADMIN");
+		Authorities auth3 = new Authorities();
+		auth3.setAuthority("ROLE_MOD");
+		try
+		{
+			authService.addUserAuth(auth);
+			authService.addUserAuth(auth2);
+		}
+		catch (Exception e)
+		{
+		
+		}
+		return "index";
+	}
+	*/
 }
