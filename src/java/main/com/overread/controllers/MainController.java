@@ -198,9 +198,21 @@ public class MainController
 	}
 	
 	@GetMapping("/blog/{blogId}/editBlog")
-	public String getEditBlog()
+	public String getEditBlog(@PathVariable("blogId") long blogId, Model model)
 	{
+		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+		Blog blog = selectedBlog.get();
+		blog.setContents();
+		model.addAttribute("blog", blog);
 		return "editblog";
+	}
+	
+	@PostMapping("/blog/{blogId}/editBlog")
+	public String updateBlog(@PathVariable("blogId")long blogId, @RequestParam("newTitle") String newTitle, @RequestParam("newContents")String newContents)
+	{
+		byte[] newContentsByte = newContents.getBytes();
+		blogService.updateBlog(newTitle, newContentsByte, blogId);
+		return "redirect:/blog/{blogId}";
 	}
 	
 	@PostMapping("/blog/{blogId}/deleteBlog")

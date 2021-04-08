@@ -30,4 +30,9 @@ public class BlogService
 	{
 		return blogRepo.findAll();
 	}
+	
+	public void updateBlog(String title, byte[] newBlogContents, long blogId)
+	{
+		blogRepo.updateBlog(title, newBlogContents, blogId);
+	}
 }

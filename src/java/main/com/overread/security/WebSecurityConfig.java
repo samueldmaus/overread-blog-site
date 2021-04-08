@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		// Do not use this configuration for production.
 		http.csrf().disable()
 		.authorizeRequests().antMatchers("/login", "/register").permitAll()
-		.antMatchers("/createBlog").hasRole("ADMIN")
+		.antMatchers("/createBlog", "/**/editBlog").hasRole("ADMIN")
 		.and().exceptionHandling().accessDeniedPage("/accessDenied")
 		.and().formLogin().loginPage("/login").permitAll()
 		.and().authorizeRequests().anyRequest().authenticated()

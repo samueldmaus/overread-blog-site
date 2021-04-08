@@ -73,7 +73,7 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="row" style="outline:3px solid black"">
+						<div class="row" style="outline:3px solid black">
 							<p>${individualcomment.getContents() }</p>
 						</div>
 					</c:otherwise>
