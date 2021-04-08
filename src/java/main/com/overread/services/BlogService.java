@@ -16,6 +16,11 @@ public class BlogService
 	@Autowired
 	private BlogRepository blogRepo;
 	
+	public void createBlog(Blog blog)
+	{
+		blogRepo.save(blog);
+	}
+	
 	public Optional<Blog> getBlog(long id)
 	{
 		return blogRepo.findById(id);

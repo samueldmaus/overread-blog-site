@@ -36,7 +36,7 @@
 					<div class="post-preview">
 						<h2><a href="./blog/${blog.getId() }">${blog.getTitle()}</a></h2>
 						<p>${blog.getContents() }</p>
-						<p class="post-meta">Posted by ${blog.getAuthor()} on ${blog.getDate().getMonth()+1}/${blog.getDate().getDay()}/${blog.getDate().getYear()+1900}</p>
+						<p class="post-meta">Posted by ${blog.getAuthor()} on ${blog.getDate().getMonth()+1}/${blog.getDate().getDate()}/${blog.getDate().getYear()+1900}</p>
 					</div>
 				</div>
 			</div>

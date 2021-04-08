@@ -1,5 +1,8 @@
 package com.overread.controllers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -177,9 +180,21 @@ public class MainController
 	}
 	
 	@GetMapping("/createBlog")
-	public String getCreateBlog()
+	public String getCreateBlog(Model model)
 	{
+		model.addAttribute("blog", new Blog());
 		return "createblog";
+	}
+	
+	@PostMapping("/createBlog")
+	public String createBlogPost(@ModelAttribute("blog")Blog blog)
+	{
+		Date now = new Date();
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		blog.setAuthor(user.getUsername());
+		blog.setDate(now);
+		blogService.createBlog(blog);
+		return "redirect:/";
 	}
 	
 	/* will create authority levels in db

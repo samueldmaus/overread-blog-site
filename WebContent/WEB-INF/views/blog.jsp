@@ -19,7 +19,7 @@
 				<div class="col-md-10 col-lg-8 mx-auto" style="color:#f5f5dc">
 	    			<div class="site-heading">
 	        			<h1>${blog.getTitle()}</h1>
-	        			<span class="subheading">Posted by ${blog.getAuthor() } on ${blog.getDate().getMonth()+1}/${blog.getDate().getDay()}/${blog.getDate().getYear()+1900}</span>
+	        			<span class="subheading">Posted by ${blog.getAuthor() } on ${blog.getDate().getMonth()+1}/${blog.getDate().getDate()}/${blog.getDate().getYear()+1900}</span>
 	    			</div>
 				</div>
 			</div>
@@ -39,6 +39,7 @@
 							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
 						</div>
 						<div class="input-group-prepend">
+							<br/>
 							<button class="btn btn-primary btn-block" type="submit">Submit</button>
 						</div>
 					</form:form>
