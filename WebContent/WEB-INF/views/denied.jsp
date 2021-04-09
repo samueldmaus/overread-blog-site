@@ -30,5 +30,6 @@
 			<h1>Sorry, you do not have access to this page</h1>
 		</div>
 	</div>
+	<%@ include file="footer.jsp" %>
 </body>
 </html>
