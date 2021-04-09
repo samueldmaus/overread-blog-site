@@ -13,7 +13,7 @@
 	<footer>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10 col-lg-8 mx-auto">
+				<div class="col-md-10 col-lg-8 mx-auto" style="text-align:center">
 					<p class="text-muted copyright">Copyright © Overread 2021</p>
 				</div>
 			</div>
