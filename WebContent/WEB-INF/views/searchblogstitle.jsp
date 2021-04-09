@@ -26,24 +26,20 @@
 			</div>
 		</div>
 	</div>
-	<sec:authorize access="isAuthenticated()">
-		<blockquote class="blockquote" style="padding:15px">
-			<h2>Welcome to Overread, <sec:authentication property="name"/></h2>
-		</blockquote>
-	</sec:authorize>
+	<blockquote class="blockquote" style="padding:15px">
+			<h5>Searching...</h5>
+	</blockquote>
 	<div class="container">
 		<c:forEach items="${blogs}" var="blog">
 			<div class="row">
 				<div class="col-md-10 col-lg-8">
 					<div class="post-preview">
 						<h2><a href="./blog/${blog.getId() }">${blog.getTitle()}</a></h2>
-						<p>${blog.getContents() }</p>
 						<p class="post-meta">Posted by ${blog.getAuthor()} on ${blog.getDate().getMonth()+1}/${blog.getDate().getDate()}/${blog.getDate().getYear()+1900}</p>
 					</div>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
-
 </body>
 </html>

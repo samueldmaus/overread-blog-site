@@ -1,5 +1,6 @@
 package com.overread.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class BlogService
 	public Iterable<Blog> getAll()
 	{
 		return blogRepo.findAll();
+	}
+	
+	public List<Blog> getBlogsByTitle(String title)
+	{
+		return blogRepo.getBlogsByTitle(title);
 	}
 	
 	public void updateBlog(String title, byte[] newBlogContents, long blogId)

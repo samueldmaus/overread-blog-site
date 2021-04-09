@@ -24,8 +24,8 @@
 					</sec:authorize>
         			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logoutSuccess">Logout</a></li>
     			</ul>
-    			<form class="d-flex">
-        			<input class="form-control me-2" type="search" placeholder="Search By Title" aria-label="Search">
+    			<form class="d-flex" method="get" action="${pageContext.request.contextPath}/searchByTitle">
+        			<input class="form-control me-2" type="search" placeholder="Search By Title" aria-label="Search" name="search" />
         			<button class="btn btn-outline-success" type="submit">Search</button>
       			</form>
 			</div>
