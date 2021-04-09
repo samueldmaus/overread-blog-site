@@ -116,50 +116,6 @@ public class MainController
 		return "blog";
 	}
 	
-	@PostMapping("/blog/{blogId}/postComment")
-	public String postComment(@PathVariable("blogId") long blogId, @ModelAttribute("comment") Comment comment)
-	{
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
-		Blog blog = selectedBlog.get();
-		Comment new_comment = new Comment(user.getUsername(), comment.getCommentContents(), blog);
-		commentService.addComment(new_comment);
-		return "redirect:/blog/{blogId}";
-	}
-	
-	@PostMapping("/blog/{blogId}/{commentId}/deleteComment")
-	public String deleteComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId)
-	{
-		commentService.deleteComment(commentId);
-		return "redirect:/blog/{blogId}";
-	}
-	
-	@GetMapping("/blog/{blogId}/{commentId}/editComment")
-	public String getEditComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId,  Model model, Model commentModel, Model blogComments, Model newComment)
-	{
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
-		Blog blog = selectedBlog.get();
-		model.addAttribute("blog", blog);
-		commentModel.addAttribute("comment", new Comment());
-		commentModel.addAttribute("username", user.getUsername());
-		commentModel.addAttribute("commentToEdit", commentId);
-		List<Comment> postedComments = commentService.getCommentsForBlog(blogId);
-		for(Comment c : postedComments)
-		{
-			c.setContents();
-		}
-		blogComments.addAttribute("blogComments", postedComments);
-		return "commentedit";
-	}
-	
-	@PostMapping("/blog/{blogId}/{commentId}/editComment")
-	public String postEditComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId, @RequestParam("updatedComment") byte[] updatedComment)
-	{
-		commentService.updateComment(updatedComment, commentId);
-		return "redirect:/blog/{blogId}";
-	}
-	
 	@GetMapping("/account")
 	public String getUserAccount()
 	{
@@ -178,48 +134,92 @@ public class MainController
 		return "denied";
 	}
 	
-	@GetMapping("/createBlog")
-	public String getCreateBlog(Model model)
-	{
-		model.addAttribute("blog", new Blog());
-		return "createblog";
-	}
+//	@PostMapping("/blog/{blogId}/postComment")
+//	public String postComment(@PathVariable("blogId") long blogId, @ModelAttribute("comment") Comment comment)
+//	{
+//		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+//		Blog blog = selectedBlog.get();
+//		Comment new_comment = new Comment(user.getUsername(), comment.getCommentContents(), blog);
+//		commentService.addComment(new_comment);
+//		return "redirect:/blog/{blogId}";
+//	}
+//	
+//	@PostMapping("/blog/{blogId}/{commentId}/deleteComment")
+//	public String deleteComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId)
+//	{
+//		commentService.deleteComment(commentId);
+//		return "redirect:/blog/{blogId}";
+//	}
+//	
+//	@GetMapping("/blog/{blogId}/{commentId}/editComment")
+//	public String getEditComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId,  Model model, Model commentModel, Model blogComments, Model newComment)
+//	{
+//		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+//		Blog blog = selectedBlog.get();
+//		model.addAttribute("blog", blog);
+//		commentModel.addAttribute("comment", new Comment());
+//		commentModel.addAttribute("username", user.getUsername());
+//		commentModel.addAttribute("commentToEdit", commentId);
+//		List<Comment> postedComments = commentService.getCommentsForBlog(blogId);
+//		for(Comment c : postedComments)
+//		{
+//			c.setContents();
+//		}
+//		blogComments.addAttribute("blogComments", postedComments);
+//		return "commentedit";
+//	}
+//	
+//	@PostMapping("/blog/{blogId}/{commentId}/editComment")
+//	public String postEditComment(@PathVariable("blogId") long blogId, @PathVariable("commentId") long commentId, @RequestParam("updatedComment") byte[] updatedComment)
+//	{
+//		commentService.updateComment(updatedComment, commentId);
+//		return "redirect:/blog/{blogId}";
+//	}
 	
-	@PostMapping("/createBlog")
-	public String createBlogPost(@ModelAttribute("blog")Blog blog)
-	{
-		Date now = new Date();
-		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		blog.setAuthor(user.getUsername());
-		blog.setDate(now);
-		blogService.createBlog(blog);
-		return "redirect:/";
-	}
-	
-	@GetMapping("/blog/{blogId}/editBlog")
-	public String getEditBlog(@PathVariable("blogId") long blogId, Model model)
-	{
-		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
-		Blog blog = selectedBlog.get();
-		blog.setContents();
-		model.addAttribute("blog", blog);
-		return "editblog";
-	}
-	
-	@PostMapping("/blog/{blogId}/editBlog")
-	public String updateBlog(@PathVariable("blogId")long blogId, @RequestParam("newTitle") String newTitle, @RequestParam("newContents")String newContents)
-	{
-		byte[] newContentsByte = newContents.getBytes();
-		blogService.updateBlog(newTitle, newContentsByte, blogId);
-		return "redirect:/blog/{blogId}";
-	}
-	
-	@PostMapping("/blog/{blogId}/deleteBlog")
-	public String deleteBlog(@PathVariable("blogId")Long blogId)
-	{
-		blogService.deleteBlog(blogId);
-		return "redirect:/";
-	}
+//	@GetMapping("/createBlog")
+//	public String getCreateBlog(Model model)
+//	{
+//		model.addAttribute("blog", new Blog());
+//		return "createblog";
+//	}
+//	
+//	@PostMapping("/createBlog")
+//	public String createBlogPost(@ModelAttribute("blog")Blog blog)
+//	{
+//		Date now = new Date();
+//		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		blog.setAuthor(user.getUsername());
+//		blog.setDate(now);
+//		blogService.createBlog(blog);
+//		return "redirect:/";
+//	}
+//	
+//	@GetMapping("/blog/{blogId}/editBlog")
+//	public String getEditBlog(@PathVariable("blogId") long blogId, Model model)
+//	{
+//		Optional<Blog> selectedBlog = blogService.getBlog(blogId);
+//		Blog blog = selectedBlog.get();
+//		blog.setContents();
+//		model.addAttribute("blog", blog);
+//		return "editblog";
+//	}
+//	
+//	@PostMapping("/blog/{blogId}/editBlog")
+//	public String updateBlog(@PathVariable("blogId")long blogId, @RequestParam("newTitle") String newTitle, @RequestParam("newContents")String newContents)
+//	{
+//		byte[] newContentsByte = newContents.getBytes();
+//		blogService.updateBlog(newTitle, newContentsByte, blogId);
+//		return "redirect:/blog/{blogId}";
+//	}
+//	
+//	@PostMapping("/blog/{blogId}/deleteBlog")
+//	public String deleteBlog(@PathVariable("blogId")Long blogId)
+//	{
+//		blogService.deleteBlog(blogId);
+//		return "redirect:/";
+//	}
 	
 	/* will create authority levels in db
 	@GetMapping("/createAuth")
