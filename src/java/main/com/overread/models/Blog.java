@@ -106,5 +106,16 @@ public class Blog
 		contents = new String(blogContents);
 	}
 	
+	@Override
+	public boolean equals(Object obj)
+	{
+		Blog compare = (Blog)obj;
+		if(this.title.equals(compare.getTitle()) && this.author.equals(compare.getAuthor()) && this.blogContents == compare.getBlogContents())
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	
 }

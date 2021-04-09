@@ -1,13 +1,12 @@
 package com.overread.tests.services;
 
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.anyObject;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import com.overread.models.User;
 import com.overread.repositories.UserRepository;
 import com.overread.services.UserService;
@@ -19,7 +18,7 @@ public class UserServiceTests
 	
 	private static UserRepository userRepo;
 	
-	@BeforeAll
+	@BeforeClass
 	public static void setup()
 	{
 		userRepo = Mockito.mock(UserRepository.class);

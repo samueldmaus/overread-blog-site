@@ -6,9 +6,9 @@ import static org.mockito.Mockito.anyObject;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import com.overread.models.Blog;
 import com.overread.repositories.BlogRepository;
@@ -20,7 +20,7 @@ public class BlogServiceTests
 	
 	private static BlogRepository blogRepo;
 	
-	@BeforeAll
+	@BeforeClass
 	public static void setup()
 	{
 		blogRepo = Mockito.mock(BlogRepository.class);

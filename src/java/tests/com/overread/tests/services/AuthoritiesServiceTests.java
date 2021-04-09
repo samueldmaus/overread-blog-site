@@ -1,7 +1,5 @@
 package com.overread.tests.services;
 
-import static org.mockito.Mockito.anyString;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,8 +7,8 @@ import java.util.Set;
 
 import static org.mockito.Mockito.anyObject;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.overread.models.Authorities;
@@ -18,8 +16,7 @@ import com.overread.models.User;
 import com.overread.repositories.AuthoritiesRepository;
 import com.overread.services.AuthoritiesService;
 
-import static org.mockito.Mockito.anyObject;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class AuthoritiesServiceTests
 {
@@ -27,7 +24,7 @@ public class AuthoritiesServiceTests
 	
 	private static AuthoritiesRepository authRepo;
 	
-	@BeforeAll
+	@BeforeClass
 	public static void setup()
 	{
 		authRepo = Mockito.mock(AuthoritiesRepository.class);
