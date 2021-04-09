@@ -99,5 +99,14 @@ public class User
 		this.authorities = authorities;
 	}
 
-
+	@Override
+	public boolean equals(Object obj)
+	{
+		User compare = (User)obj;
+		if(this.username.equals(compare.getUsername()) && this.email.equals(compare.getEmail()) && this.password.equals(compare.getPassword()))
+		{
+			return true;
+		}
+		return false;
+	}
 }

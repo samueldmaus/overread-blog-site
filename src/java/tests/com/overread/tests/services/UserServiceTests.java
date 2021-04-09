@@ -34,5 +34,14 @@ public class UserServiceTests
 		String expected = "email1";
 		assertEquals(expected, actual.getEmail());
 	}
+	
+	@Test
+	public void testSaveUser()
+	{
+		Mockito.when(userRepo.save(anyObject())).thenReturn(new User("user1", "email1", "password1"));
+		User actual = userService.addUser(new User());
+		User expected = new User("user1", "email1", "password1");
+		assertEquals(expected, actual);
+	}
 
 }

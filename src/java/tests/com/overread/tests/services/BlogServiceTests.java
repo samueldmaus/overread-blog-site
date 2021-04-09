@@ -36,6 +36,4 @@ public class BlogServiceTests
 		String expected = "title";
 		assertEquals(expected, actual.get().getTitle());
 	}
-	
-	
 }

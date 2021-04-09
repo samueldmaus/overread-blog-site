@@ -21,9 +21,9 @@ public class UserService
 		this.userRepo = userRepo;
 	}
 	
-	public void addUser(User user)
+	public User addUser(User user)
 	{
-		userRepo.save(user);
+		return userRepo.save(user);
 	}
 	
 	public User findUserByUsername(String username)
