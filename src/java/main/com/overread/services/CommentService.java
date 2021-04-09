@@ -16,9 +16,16 @@ public class CommentService
 	@Autowired
 	private CommentRepository commentRepo;
 	
-	public void addComment(Comment comment)
+	public CommentService() {}
+	
+	public CommentService(CommentRepository commentRepo)
 	{
-		commentRepo.save(comment);
+		this.commentRepo = commentRepo;
+	}
+	
+	public Comment addComment(Comment comment)
+	{
+		return commentRepo.save(comment);
 	}
 	
 	public List<Comment> getCommentsForBlog(Long blog_id)
