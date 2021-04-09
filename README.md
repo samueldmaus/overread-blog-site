@@ -5,6 +5,10 @@ They can go back later and edit or delete their comments if they wish. The admin
 
 ## Screenshots
 
+![register](WebContent/resources/images/screenshot_register.PNG)
+
+![blog](WebContent/resources/images/screenshot_blog.PNG)
+
 ## User Stories
 
 As a site admin:
