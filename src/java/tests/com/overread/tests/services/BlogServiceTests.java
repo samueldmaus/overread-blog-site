@@ -2,6 +2,7 @@ package com.overread.tests.services;
 
 import org.mockito.Mockito;
 import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyObject;
 
 import java.util.Optional;
 
@@ -35,5 +36,15 @@ public class BlogServiceTests
 		Optional<Blog> actual = blogService.getBlog((long)1);
 		String expected = "title";
 		assertEquals(expected, actual.get().getTitle());
+	}
+	
+	@Test
+	public void testAddBlog()
+	{
+		byte[] b = null;
+		Mockito.when(blogRepo.save(anyObject())).thenReturn(new Blog(b, "title", "author"));
+		Blog actual = blogService.createBlog(new Blog());
+		Blog expected = new Blog(b, "title", "author");
+		assertEquals(expected, actual);
 	}
 }

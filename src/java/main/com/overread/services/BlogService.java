@@ -24,9 +24,9 @@ public class BlogService
 		this.blogRepo = blogRepo;
 	}
 	
-	public void createBlog(Blog blog)
+	public Blog createBlog(Blog blog)
 	{
-		blogRepo.save(blog);
+		return blogRepo.save(blog);
 	}
 	
 	public Optional<Blog> getBlog(long id)
