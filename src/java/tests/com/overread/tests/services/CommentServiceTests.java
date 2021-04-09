@@ -2,6 +2,9 @@ package com.overread.tests.services;
 
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,14 @@ public class CommentServiceTests
 		List<Comment> actual = commentService.getCommentsForBlog((long)1);
 		String expected = "author";
 		assertEquals(expected, actual.get(0).getAuthor());
+	}
+	
+	@Test
+	public void testDeleteComment()
+	{
+		doNothing().when(commentRepo).deleteById(anyLong());
+		commentService.deleteComment((long)1);
+		verify(commentRepo, times(1)).deleteById((long) 1);
 	}
 
 }

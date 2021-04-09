@@ -3,7 +3,13 @@ package com.overread.tests.services;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.BeforeClass;
@@ -48,5 +54,25 @@ public class BlogServiceTests
 		assertEquals(expected, actual);
 	}
 	
+	@Test
+	public void testGetBlogsByTitle()
+	{
+		byte[] b = null;
+		List<Blog> blogs = new ArrayList();
+		blogs.add(new Blog(b, "title1", "author1"));
+		blogs.add(new Blog(b, "title2", "author2"));
+		Mockito.when(blogRepo.getBlogsByTitle(anyString())).thenReturn(blogs);
+		List<Blog> actual = blogService.getBlogsByTitle("title");
+		Blog expected = new Blog(b, "title2", "author2");
+		assertEquals(expected, actual.get(1));
+	}
+	
+	@Test
+	public void testDeleteBlog()
+	{
+		doNothing().when(blogRepo).deleteById(anyLong());
+		blogService.deleteBlog((long)1);
+		verify(blogRepo, times(1)).deleteById((long)1);
+	}
 	
 }
