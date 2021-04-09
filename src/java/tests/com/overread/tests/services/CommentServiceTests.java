@@ -1,6 +1,12 @@
 package com.overread.tests.services;
 
+import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.doNothing;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -33,6 +39,19 @@ public class CommentServiceTests
 		Comment actual = commentService.addComment(new Comment());
 		String expected = "author";
 		assertEquals(expected, actual.getAuthor());
+	}
+	
+	@Test
+	public void testGetCommentsForBlog()
+	{
+		byte[] b = null;
+		Comment comment1 = new Comment("author", b, new Blog());
+		List<Comment> comments = new ArrayList<Comment>();
+		comments.add(comment1);
+		Mockito.when(commentRepo.getCommentsByBlogId(anyLong())).thenReturn(comments);
+		List<Comment> actual = commentService.getCommentsForBlog((long)1);
+		String expected = "author";
+		assertEquals(expected, actual.get(0).getAuthor());
 	}
 
 }

@@ -47,4 +47,6 @@ public class BlogServiceTests
 		Blog expected = new Blog(b, "title", "author");
 		assertEquals(expected, actual);
 	}
+	
+	
 }
