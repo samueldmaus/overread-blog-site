@@ -11,7 +11,6 @@ import com.overread.models.Blog;
 
 public interface BlogRepository extends CrudRepository<Blog, Long>
 {
-	
 	@Modifying
 	@Query(value="UPDATE blogs SET title = :t, blogcontents = :bC WHERE id = :bId", nativeQuery=true)
 	public void updateBlog(@Param("t")String title, @Param("bC")byte[] updatedBlogContents, @Param("bId")long blogId);
