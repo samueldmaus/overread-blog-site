@@ -46,7 +46,7 @@
 				<div class="col">
 					<form:form action="./${blog.getId() }/postComment" method="post" modelAttribute="comment">
 						<div class="input-group">
-							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
+							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." rows="5"/>
 						</div>
 						<div class="input-group-prepend">
 							<button class="btn btn-primary btn-block" type="submit" style="margin-top:5px">Submit</button>

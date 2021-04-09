@@ -1,6 +1,7 @@
 package com.overread.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +34,6 @@ public class Blog
 	
 	@Column(name="CONTENTS")
 	private String contents;
-
 	
 	public Blog(byte[] blog, String title, String author)
 	{

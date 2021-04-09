@@ -31,45 +31,53 @@
 				</div>
 			</div>
 		</div>
+		<br/>
 		<div class="container">
-			<form:form action="./${blog.getId() }/postComment" method="post" modelAttribute="comment">
-				<div class="input-group">
-					<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." />
+			<div class="row">
+				<div class="col">
+					<form:form action="./${blog.getId() }/postComment" method="post" modelAttribute="comment">
+						<div class="input-group">
+							<form:textarea cssClass="form-control" path="commentContents" placeholder="Comment..." rows="5"/>
+						</div>
+						<div class="input-group-prepend">
+							<button class="btn btn-primary btn-block" type="submit" style="margin-top:5px">Submit</button>
+						</div>
+					</form:form>
 				</div>
-				<div class="input-group-prepend">
-					<button class="btn btn-primary btn-block" type="submit">Submit</button>
-				</div>
-			</form:form>
+				<div class="col"></div>
+			</div>
 		</div>
-		<div class="container">
+		<div class="container" style="padding:15px">
 			<c:forEach items="${blogComments}" var="individualcomment">
 				<c:choose>
 					<c:when test="${individualcomment.getAuthor() == username}">
 						<c:choose>
 							<c:when test="${individualcomment.getId() == commentToEdit }">
-								<form method="post" action="${pageContext.request.contextPath}/blog/${blog.getId()}/${individualcomment.getId()}/editComment">
-									<textarea name="updatedComment" autofocus >${individualcomment.getContents() }</textarea>
-									<button type="submit">Submit</button>
-								</form>
+								<div class="row" style="border-bottom: 3px solid black; margin:5px; padding:10px; display:block">
+									<form method="post" action="${pageContext.request.contextPath}/blog/${blog.getId()}/${individualcomment.getId()}/editComment">
+										<textarea name="updatedComment" rows="3" autofocus style="width:50%">${individualcomment.getContents() }</textarea>
+										<button class="btn btn-primary btn-block" type="submit" style="width:50%">Submit</button>
+									</form>
+								</div>
 							</c:when>
 							<c:otherwise>
-								<div class="row">
+								<div class="row" style="border-bottom: 3px solid black; margin:5px; padding:10px; display:block">
 									<p>${individualcomment.getContents() }</p>
-								</div>
-								<div class="row">
-									<form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
-										<input type="submit" value="Edit"/>
+									<p>-(You)</p>
+									<!-- <form:form method="get" action="./${blog.getId()}/${individualcomment.getId()}/editComment">
+										<input class="btn btn-secondary" type="submit" value="Edit" style="margin:5px"/>
 									</form:form>
 									<form:form method="post" action="./${blog.getId() }/${individualcomment.getId()}/deleteComment">
-										<input type="submit" value="Delete" />
-									</form:form>
+										<input class="btn btn-danger" type="submit" value="Delete"/>
+									</form:form> -->
 								</div>
 							</c:otherwise>
 						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<div class="row">
+						<div class="row" style="border-bottom: 3px solid black; margin:5px; padding:10px; display:block">
 							<p>${individualcomment.getContents() }</p>
+							<p>-${individualcomment.getAuthor() }
 						</div>
 					</c:otherwise>
 				</c:choose>
