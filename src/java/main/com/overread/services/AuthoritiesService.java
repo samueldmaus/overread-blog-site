@@ -12,13 +12,19 @@ import com.overread.repositories.AuthoritiesRepository;
 @Transactional
 public class AuthoritiesService
 {
-	
 	@Autowired
 	private AuthoritiesRepository authRepo;
 	
-	public void addUserAuth(Authorities auth)
+	public AuthoritiesService() {}
+	
+	public AuthoritiesService(AuthoritiesRepository authRepo)
 	{
-		authRepo.save(auth);
+		this.authRepo = authRepo;
+	}
+	
+	public Authorities addUserAuth(Authorities auth)
+	{
+		return authRepo.save(auth);
 	}
 	
 	public Iterable<Authorities> getAllAuths()

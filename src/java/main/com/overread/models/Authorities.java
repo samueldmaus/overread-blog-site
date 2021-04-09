@@ -26,6 +26,12 @@ public class Authorities
 
 	public Authorities() {}
 	
+	public Authorities(String authority, Set<User> users)
+	{
+		this.authority = authority;
+		this.userList = users;
+	}
+	
 	public String getAuthority()
 	{
 		return authority;
