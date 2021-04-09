@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.overread.exceptions.PasswordLengthException;
 import com.overread.models.Authorities;
 import com.overread.models.Blog;
 import com.overread.models.Comment;
@@ -79,8 +80,12 @@ public class MainController
 	}
 	
 	@PostMapping("/register")
-	public String processRegister(@ModelAttribute("user") User user)
+	public String processRegister(@ModelAttribute("user") User user) throws PasswordLengthException
 	{
+		if(user.getPassword().length() < 6)
+		{
+			throw new PasswordLengthException("Password must be at least 7 characters long");
+		}
 		Set<Authorities> userAuth = new HashSet();
 		List<Authorities> authIt = (List<Authorities>) authService.getAllAuths();
 		userAuth.add(authIt.get(0));
@@ -94,7 +99,6 @@ public class MainController
 	@GetMapping("/logoutSuccess")
 	public String logoutSuccess()
 	{
-
 		return "login";
 	}
 	
