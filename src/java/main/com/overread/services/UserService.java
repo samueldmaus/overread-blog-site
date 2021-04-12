@@ -30,4 +30,9 @@ public class UserService
 	{
 		return userRepo.findUserByUsername(username);
 	}
+	
+	public void updateUserPicture(String username, byte[] p)
+	{
+		userRepo.updateUserPicture(username, p);
+	}
 }

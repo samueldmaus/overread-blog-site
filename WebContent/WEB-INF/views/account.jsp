@@ -36,12 +36,17 @@
 					<img style="border-radius: 50%; width:75%" src="${blankPic }" alt="blank" />
 				</c:when>
 				<c:otherwise>
+					<img style="border-radius: 10%; width:75%" src="data:image/jpg;base64,${prof_pic_user }" alt="${loggedInUser.username }" />
 				</c:otherwise>
 			</c:choose>
 			<br/>
-			<form style="text-align: center">
-				<button style="margin-top: 25px">Edit Picture</button>
-			</form>
+			<div class="row">
+			<form action="${pageContext.request.contextPath}/account/profilepic" method="post" enctype="multipart/form-data" style="margin-top:35px">  
+				<h6>Upload Picture: </h6>
+				<input class="btn btn-secondary" type="file" name="file"/>
+				<input class="btn btn-primary" type="submit" value="Upload File"/>  
+			</form> 
+			</div> 
 		</div>
 		<div class="col">
 			<ul style="padding:15px">

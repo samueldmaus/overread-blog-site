@@ -38,7 +38,7 @@ public class User
 	
 	@Lob
 	@Column(name="PROFILEPIC")
-	private Byte[] profile_pic;
+	private byte[] profile_pic;
 	
 	public User()
 	{
@@ -104,12 +104,12 @@ public class User
 		this.authorities = authorities;
 	}
 
-	public Byte[] getProfile_pic()
+	public byte[] getProfile_pic()
 	{
 		return profile_pic;
 	}
 
-	public void setProfile_pic(Byte[] profile_pic)
+	public void setProfile_pic(byte[] profile_pic)
 	{
 		this.profile_pic = profile_pic;
 	}

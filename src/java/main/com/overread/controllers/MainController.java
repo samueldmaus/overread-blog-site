@@ -1,8 +1,9 @@
 package com.overread.controllers;
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.overread.exceptions.PasswordLengthException;
 import com.overread.models.Authorities;
@@ -52,7 +57,6 @@ public class MainController
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
-	
 	@GetMapping("/")
 	public String getIndex(Model model)
 	{
@@ -127,22 +131,29 @@ public class MainController
 	}
 	
 	@GetMapping("/account")
-	public String getUserAccount(Model model)
+	public String getUserAccount(Model model) throws IOException
 	{
 		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User loggedInUser = userService.findUserByUsername(user.getUsername());
 		model.addAttribute("loggedInUser", loggedInUser);
-		if(loggedInUser.getProfile_pic() == null)
+		if(loggedInUser.getProfile_pic() == null || loggedInUser.getProfile_pic().length == 0)
 		{
 			model.addAttribute("picture", false);
+		}
+		else
+		{
+			String base64Image = Base64.getEncoder().encodeToString(loggedInUser.getProfile_pic());
+			model.addAttribute("prof_pic_user", base64Image);
 		}
 		return "account";
 	}
 	
-	@PostMapping("/profilepic")
-	public String openPicture() throws IOException
+	@PostMapping("/account/profilepic")
+	public String openPicture(@RequestParam("file") CommonsMultipartFile file, HttpSession session)
 	{
-		Desktop.getDesktop().open(new File("C:\\Users\\Sam Maus\\Documents\\presentation_pictures"));
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User loggedInUser = userService.findUserByUsername(user.getUsername());
+		userService.updateUserPicture(loggedInUser.getUsername(), file.getBytes()); 
 		return "redirect:/account";
 	}
 	
