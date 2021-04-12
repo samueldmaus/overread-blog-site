@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -18,7 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @ComponentScan("com.overread")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
-{
+{	
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		// CSRF is disabled for simplification and demonstration.
 		// Do not use this configuration for production.
 		http.csrf().disable()
-		.authorizeRequests().antMatchers("/login", "/register").permitAll()
+		.authorizeRequests().antMatchers("/login", "/register", "/oauth_login").permitAll()
 		.antMatchers("/createBlog", "/**/editBlog").hasRole("ADMIN")
 		.and().exceptionHandling().accessDeniedPage("/accessDenied")
 		.and().formLogin().loginPage("/login").permitAll()
@@ -58,4 +58,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	{
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
+	
 }

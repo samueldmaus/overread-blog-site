@@ -1,9 +1,14 @@
 package com.overread.controllers;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -46,6 +51,7 @@ public class MainController
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+
 	
 	@GetMapping("/")
 	public String getIndex(Model model)
@@ -121,9 +127,23 @@ public class MainController
 	}
 	
 	@GetMapping("/account")
-	public String getUserAccount()
+	public String getUserAccount(Model model)
 	{
+		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User loggedInUser = userService.findUserByUsername(user.getUsername());
+		model.addAttribute("loggedInUser", loggedInUser);
+		if(loggedInUser.getProfile_pic() == null)
+		{
+			model.addAttribute("picture", false);
+		}
 		return "account";
+	}
+	
+	@PostMapping("/profilepic")
+	public String openPicture() throws IOException
+	{
+		Desktop.getDesktop().open(new File("C:\\Users\\Sam Maus\\Documents\\presentation_pictures"));
+		return "redirect:/account";
 	}
 	
 	@GetMapping("/about")
