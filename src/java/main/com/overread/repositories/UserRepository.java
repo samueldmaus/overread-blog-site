@@ -14,4 +14,8 @@ public interface UserRepository extends CrudRepository<User, String>
 	@Modifying
 	@Query(value="UPDATE users SET profilepic = :p WHERE username = :u", nativeQuery=true)
 	public void updateUserPicture(@Param("u")String username, @Param("p")byte[] p);
+	
+	@Modifying
+	@Query(value="UPDATE users SET password = :p WHERE username = :u", nativeQuery=true)
+	public void updatePassword(@Param("u")String username, @Param("p")String password);
 }

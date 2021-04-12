@@ -34,11 +34,13 @@
 					<form:errors path="password" />
 				</div>
 				<div class="form-group">
+					<input class="form_input" type="password" name="confirmedPassword" placeholder="Confirm Password" />
 				</div>
 				<div>
 					<button class="btn btn-primary btn-block" type="submit">Sign Up</button>
 				</div>
 				<p class="already_login">Already have an account? Click <a href="login">here</a> to login</p>
+				<h5>${RegisterFailed }</h5>
 			</form:form>
 		</div>
 	</section>

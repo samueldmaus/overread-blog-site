@@ -35,4 +35,9 @@ public class UserService
 	{
 		userRepo.updateUserPicture(username, p);
 	}
+	
+	public void updatePassword(String username, String password)
+	{
+		userRepo.updatePassword(username, password);
+	}
 }

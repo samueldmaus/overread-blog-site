@@ -1,8 +1,6 @@
 package com.overread.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.overread.exceptions.PasswordLengthException;
@@ -90,11 +87,17 @@ public class MainController
 	}
 	
 	@PostMapping("/register")
-	public String processRegister(@ModelAttribute("user") User user) throws PasswordLengthException
+	public String processRegister(@ModelAttribute("user") User user, @RequestParam("confirmedPassword")String confirmed, Model model) throws PasswordLengthException
 	{
 		if(user.getPassword().length() < 6)
 		{
 			throw new PasswordLengthException("Password must be at least 7 characters long");
+		}
+		if(!user.getPassword().equals(confirmed))
+		{
+			model.addAttribute("RegisterFailed", "Passwords did not match");
+			user.setPassword("");
+			return "register";
 		}
 		Set<Authorities> userAuth = new HashSet();
 		List<Authorities> authIt = (List<Authorities>) authService.getAllAuths();
@@ -152,8 +155,22 @@ public class MainController
 	public String openPicture(@RequestParam("file") CommonsMultipartFile file, HttpSession session)
 	{
 		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User loggedInUser = userService.findUserByUsername(user.getUsername());
-		userService.updateUserPicture(loggedInUser.getUsername(), file.getBytes()); 
+		userService.updateUserPicture(user.getUsername(), file.getBytes()); 
+		return "redirect:/account";
+	}
+	
+	@PostMapping("/account/changepassword")
+	public String changePassword(@RequestParam("changed")String password, @RequestParam("changedConfirm")String confirmed, Model model)
+	{
+		if(!password.equals(confirmed))
+		{
+			model.addAttribute("loginFailedMessage", "Confirmed Password Must Match");
+		} 
+		else
+		{
+			UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			userService.updatePassword(user.getUsername(), passwordEncoder.encode(password));
+		}
 		return "redirect:/account";
 	}
 	
